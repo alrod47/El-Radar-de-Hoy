@@ -45,5 +45,84 @@ Wolfgang, no te empines; una crónica de Fernando Vivas sobre el candidato presi
             </div>
         </div>
     <div class="p-4 mb-3 bg-body-tertiary rounded"> <h4 class="fst-italic">Acerca de</h4> <p class="mb-0">El Radar de Hoy es una institución dedicada al periodismo de rigor, comprometida con la veracidad y el análisis profundo de la actualidad mundial. Actuamos como el nexo esencial entre los hechos y la opinión pública, priorizando la objetividad en cada cobertura. Nuestra misión es informar con integridad, ofreciendo una perspectiva clara sobre los eventos que moldean el presente y el futuro de nuestra sociedad.</p> </div> <div> <h4 class="fst-italic">Noticias recientes</h4> <ul class="list-unstyled"> <li> <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#"> <img src="petroleo.jpg" alt="petroleo" width="120" height="100"> <div class="col-lg-8"> <h6 class="mb-0">El petróleo cae hasta 5%: ¿empieza la desescalada en los precios?</h6> <small class="text-body-secondary">Marzo 16, 2026</small> </div> </a> </li> <li> <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#"> <img src="menezes.jpg" alt="menezes" width="120" height="100"> <div class="col-lg-8"> <h6 class="mb-0">Con Vélez y Gruber: quiénes son las otras novedades en la primera lista de Mano Menezes</h6> <small class="text-body-secondary">Marzo 16, 2026</small> </div> </a> </li> <li> <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#"> <img src="sejil.jpg" alt="sejil" width="120" height="100"> <div class="col-lg-8"> <h6 class="mb-0">El misil Sejil y las armas más poderosas de Irán: ¿cuáles ha usado y cuáles no?</h6> <small class="text-body-secondary">Marzo 16, 2026</small> </div> </a> </li> </ul> </div> <div class="p-4"> <h4 class="fst-italic">Archivos</h4> <ol class="list-unstyled mb-0"> <li><a href="#">Agosto 2026</a></li> <li><a href="#">Julio 2026</a></li> <li><a href="#">Junio 2026</a></li> <li><a href="#">Mayo 2026</a></li> <li><a href="#">Abril 2026</a></li> <li><a href="#"> Marzo 2026</a></li> <li><a href="#">Febrero 2026</a></li> <li><a href="#">Enero 2026</a></li> <li><a href="#">Diciembre 2025</a></li> <li><a href="#">Noviembre 2025</a></li> <li><a href="#">Octubre 2025</a></li> <li><a href="#">Setiembre 2025</a></li> </ol> </div> <div class="p-4"> <h4 class="fst-italic">Otras redes</h4> <ol class="list-unstyled"> <li><a href="#">Instagram</a></li> <li><a href="#">TikTok</a></li> <li><a href="#">Facebook</a></li> </ol> </div> </div> </div> </div> </main> <footer class="py-5 text-center text-body-secondary bg-body-tertiary"> <p>© El Radar de Hoy, 2026</p> <p class="mb-0"> <a href="#">Volver arriba</a> </p> </footer>   <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" class="astro-vvvwv3sm"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script type="module">
+      import { GoogleGenAI } from "https://esm.run/@google/genai";
+
+      const ai = new GoogleGenAI({ apiKey: "AQ.Ab8RN6IfTl0s5WpSjv05fjd0VqoxQ9du54lG96en5Wt-BirGxQ" });
+
+      const inputUsuario = document.getElementById("ingreso-usuario");
+      const ventanaChat = document.getElementById("ventana-chat");
+      const botonEnviar = document.getElementById("boton-enviar");
+
+      let chatSesion = null;
+
+      async function inicializarChat() {
+        chatSesion = ai.chats.create({
+          model: "gemini-3.5-flash",
+          config: {
+            systemInstruction: `
+1. ROL Y PERSONA
+Eres "Cronos", el asistente virtual oficial y experto en actualidad global e información general.
+Tu pasión: El periodismo de calidad, el análisis de la actualidad, la ciencia, la economía y el pulso del mundo.
+Tu tono: Analítico, objetivo, ágil, culto, riguroso y accesible.
+Tu objetivo: Mantener al usuario informado sobre las noticias más relevantes de la jornada a nivel mundial, abarcando economía, política, ciencia, tecnología y cultura, e invitarlo a profundizar en los temas que más le interesen.
+
+2. DIRECTRICES DE COMUNICACIÓN
+Sé conciso pero informativo. Usa emojis relevantes (🌍, 📈, 🔬, ⚡) sin saturar.
+Si el usuario muestra interés particular en un tema o sector (por ejemplo, tecnología o economía), adapta y profundiza en ese enfoque.
+Siempre cierra con un Call to Action que invite a indagar más (ej. "¿Te gustaría que profundicemos en alguna de estas noticias?" o "¿Sobre qué tema te gustaría saber más detalles hoy?").
+3. REGLAS CRÍTICAS (RIGOR INFORMATIVO)
+PROHIBICIÓN ABSOLUTA: No inventes datos, fuentes ni acontecimientos. Utiliza herramientas de búsqueda si necesitas verificar hechos actuales.
+
+Si te preguntan por un evento en curso o sin confirmar:
+Indica claramente que la información está en desarrollo o sujeto a actualización.
+INMEDIATAMENTE aporta el contexto disponible y las fuentes oficiales o agencias de referencia.
+Mantén la neutralidad y evita sesgos ideológicos.
+
+4. FORMATO OBLIGATORIO DE RESPUESTA
+Estructura tus respuestas en párrafos o viñetas bien definidos para facilitar la lectura rápida.
+Separa SIEMPRE cada bloque con un doble salto de línea.
+Usa negritas para conceptos clave o nombres propios destacados y cursivas para citas textuales o titulares secundarios.
+
+5. SOPORTE TÉCNICO BÁSICO
+Soluciones rápidas para errores de visualización o de carga (reiniciar sesión, refrescar chat). Casos complejos de la plataforma -> soporte técnico general de la aplicación.
+`
+          }
+        });
+      }
+
+      inicializarChat();
+
+      botonEnviar.addEventListener("click", async () => {
+        const mensaje = inputUsuario.value.trim();
+        if (!mensaje) return;
+
+        const divUser = document.createElement("div");
+        divUser.textContent = mensaje;
+        divUser.className = "p-2 m-1 bg-warning-subtle rounded small text-end";
+        ventanaChat.appendChild(divUser);
+        inputUsuario.value = "";
+        ventanaChat.scrollTop = ventanaChat.scrollHeight;
+        botonEnviar.disabled = true;
+
+        try {
+          const response = await chatSesion.sendMessage({ message: mensaje });
+
+          const divIA = document.createElement("div");
+          divIA.innerHTML = marked.parse(response.text);
+          divIA.className = "p-2 m-1 bg-light rounded small border";
+          ventanaChat.appendChild(divIA);
+          ventanaChat.scrollTop = ventanaChat.scrollHeight;
+        } catch (error) {
+          alert("Error de conexión con la IA: " + error.message);
+        } finally {
+          botonEnviar.disabled = false;
+        }
+      });
+    </script>
+</body>
+</html>
 </body>
 </html>
